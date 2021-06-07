@@ -4,7 +4,6 @@ import { auth } from 'firebase';
 import { useAuth } from '../lib/auth';
 
 const Home = () => {
-  //use auth hook created
   const auth = useAuth();
 
   return (
@@ -23,11 +22,18 @@ const Home = () => {
 
         {auth?.user ? (
           <>
-            <p>Hi, { auth.user.displayName }</p>
+            <p>Hi, {auth.user.displayName}</p>
             <button onClick={(e) => auth.signout()}>Sing Out</button>
           </>
         ) : (
-          <button onClick={(e) => auth.signinWithGithub()}>Sing In</button>
+          <>
+            <button onClick={(e) => auth.signinWithGithub()}>
+              Sing In With Github
+            </button>
+            <button onClick={(e) => auth.signinWithGoogle()}>
+              Sing In With Google
+            </button>
+          </>
         )}
       </main>
     </div>
