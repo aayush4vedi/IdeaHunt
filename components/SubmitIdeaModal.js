@@ -74,7 +74,15 @@ const SubmitIdeaModal = () => {
 
   return (
     <>
-      <Button onClick={onOpen}>Sumbit An Idea</Button>
+      <Button
+        onClick={onOpen}
+        colorScheme="teal"
+        backgroundColor="teal.400"
+        color="white"
+        mt={5}
+      >
+        Sumbit An Idea
+      </Button>
 
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
