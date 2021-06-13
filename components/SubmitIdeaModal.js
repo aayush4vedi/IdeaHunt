@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Modal,
@@ -13,13 +13,39 @@ import {
   Input,
   useDisclosure,
   Button,
-  Textarea
+  useToast
 } from '@chakra-ui/react';
 import { createIdea } from '../lib/db';
+import { useAuth } from '@/lib/auth';
 
 const SubmitIdeaModal = () => {
+  const auth = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  //set button to spinning on form submit
+  const plainSubmitButton = (
+    <Button
+      colorScheme="teal"
+      backgroundColor="teal.400"
+      color="white"
+      type="submit"
+    >
+      Submit
+    </Button>
+  );
+  const spinningSubmitButton = (
+    <Button
+      isLoading
+      loadingText="Submitting"
+      colorScheme="teal"
+      variant="solid"
+    >
+      Submit
+    </Button>
+  );
+  const [submitButton, setStateOfSubmitButton] = useState(plainSubmitButton);
   const initialRef = useRef();
+  const toast = useToast();
 
   const {
     register,
@@ -27,7 +53,24 @@ const SubmitIdeaModal = () => {
     formState: { errors }
   } = useForm();
 
-  const onCreateIdea = (data) => createIdea(data);
+  const onCreateIdea = ({ title, description }) => {
+    const newIdea = {
+      authorId: auth.user.uid,
+      createdAt: new Date().toISOString(),
+      title,
+      description
+    };
+    setStateOfSubmitButton(spinningSubmitButton);
+    createIdea(newIdea);
+    toast({
+      title: 'Idea Submitted.',
+      description: 'Thanks for sharing your idea with the world!',
+      status: 'success',
+      duration: 5000,
+      isClosable: true
+    });
+    onClose();
+  };
 
   return (
     <>
@@ -45,7 +88,7 @@ const SubmitIdeaModal = () => {
                 ref={initialRef}
                 placeholder="Enter title for your idea"
                 // defaultValue="title"
-                {...register('title',{ required: true })}
+                {...register('title', { required: true })}
               />
               {errors.exampleRequired && <span>This field is required</span>}
             </FormControl>
@@ -57,7 +100,7 @@ const SubmitIdeaModal = () => {
                 placeholder="Write your description here"
                 size="md"
                 // defaultValue="description"
-                {...register('description',{ required: true })}
+                {...register('description', { required: true })}
               />
               {errors.exampleRequired && <span>This field is required</span>}
             </FormControl>
@@ -67,14 +110,7 @@ const SubmitIdeaModal = () => {
             <Button onClick={onClose} mr={3}>
               Cancel
             </Button>
-            <Button
-              colorScheme="teal"
-              backgroundColor="teal.400"
-              color="white"
-              type="submit"
-            >
-              Submit
-            </Button>
+            {submitButton}
           </ModalFooter>
         </ModalContent>
       </Modal>
