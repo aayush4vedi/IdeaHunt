@@ -7,11 +7,13 @@ import {
   Avatar,
   useColorModeValue
 } from '@chakra-ui/react';
+import { parseISO, format } from 'date-fns';
 
 const IdeaListItem = ({ idea }) => {
   return (
     <Center py={2}>
       <Box
+        maxW="100%"
         w={'full'}
         bg={useColorModeValue('white', 'gray.900')}
         boxShadow={'xl'}
@@ -43,7 +45,9 @@ const IdeaListItem = ({ idea }) => {
           {idea ? (
             <Stack direction={'column'} spacing={0} fontSize={'sm'}>
               <Text fontWeight={600}>{idea?.authorId}</Text>
-              <Text color={'gray.500'}>{idea?.createdAt}</Text>
+              <Text color={'gray.500'}>
+                {format(parseISO(idea?.createdAt), 'PPpp')}
+              </Text>
             </Stack>
           ) : null}
         </Stack>

@@ -1,10 +1,11 @@
 import { Box } from '@chakra-ui/react';
+
 import IdeaListItem from '@/components/IdeaListItem';
-import IdeaListItemPlacebo from './IdeaListItemPlacebo';
+import IdeaListItemPlacebo from '@/components/IdeaListItemPlacebo';
 
 const IdeaList = ({ ideas }) => {
   const ideaList = [];
-  ideas.map((idea) => {
+  ideas?.map((idea) => {
     ideaList.push(<IdeaListItem idea={idea} />);
   });
   return ideaList.length == 0 ? (

@@ -1,9 +1,11 @@
 import Head from 'next/head';
 import { useColorMode, Button, Flex, Text, Code, Icon } from '@chakra-ui/react';
+import useSWR from 'swr';
 
-import { useAuth } from '../lib/auth';
-import SubmitIdeaModal from '../components/SubmitIdeaModal';
+import { useAuth } from '@/lib/auth';
+import SubmitIdeaModal from '@/components/SubmitIdeaModal';
 import IdeaList from '@/components/IdeaList';
+import fetcher from '@/utils/fetcher';
 
 const Dashboard = () => {
   const auth = useAuth();
@@ -47,6 +49,8 @@ const Dashboard = () => {
     }
   ];
 
+  const { data } = useSWR('/api/ideas', fetcher);
+  console.log('-------> ', data);
   return (
     <>
       <Flex
@@ -58,8 +62,7 @@ const Dashboard = () => {
         backgroundColor="gray.100"
       >
         <SubmitIdeaModal />
-
-        <IdeaList ideas={fakeIdeas} />
+        {data ? <IdeaList ideas={data.ideas} /> : <IdeaList ideas={[]} />}
       </Flex>
     </>
   );

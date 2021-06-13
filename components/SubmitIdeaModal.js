@@ -15,7 +15,9 @@ import {
   Button,
   useToast
 } from '@chakra-ui/react';
-import { createIdea } from '../lib/db';
+import { mutate } from 'swr';
+
+import { createIdea } from '@/lib/db';
 import { useAuth } from '@/lib/auth';
 
 const SubmitIdeaModal = () => {
@@ -69,6 +71,14 @@ const SubmitIdeaModal = () => {
       duration: 5000,
       isClosable: true
     });
+    //SWR-mutation
+    mutate(
+      '/api/ideas',
+      async (data) => {
+        return { ideas: [...data.ideas, newIdea] };
+      },
+      false   //use 'false' to mutate w/o revalidation
+    );
     onClose();
   };
 
@@ -80,6 +90,10 @@ const SubmitIdeaModal = () => {
         backgroundColor="teal.400"
         color="white"
         mt={5}
+        _active={{
+          bg: 'teal.500',
+          transform: 'scale(0.95)'
+        }}
       >
         Sumbit An Idea
       </Button>

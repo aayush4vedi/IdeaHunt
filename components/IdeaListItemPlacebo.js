@@ -15,6 +15,7 @@ const IdeaListItemPlacebo = () => {
   return (
     <Center py={2}>
       <Box
+        maxW="100%"
         w={'full'}
         bg={useColorModeValue('white', 'gray.900')}
         boxShadow={'xl'}
