@@ -9,10 +9,19 @@ import {
   Center,
   Link,
   IconButton,
-  Code
+  Code,
+  Avatar,
+  HStack
 } from '@chakra-ui/react';
 
-import { FaEllo, FaSun, FaMoon, FaArrowRight } from 'react-icons/fa';
+import {
+  FaEllo,
+  FaSun,
+  FaMoon,
+  FaArrowRight,
+  FaGithub,
+  FaGoogle
+} from 'react-icons/fa';
 
 const LandingPage = ({ toggleColorMode, auth }) => (
   <Box
@@ -48,7 +57,7 @@ const LandingPage = ({ toggleColorMode, auth }) => (
               IdeaHunt
             </Link>
           </Box>
-          <Box>
+          <HStack>
             <IconButton
               aria-label="icon"
               icon={<FaSun />}
@@ -59,17 +68,25 @@ const LandingPage = ({ toggleColorMode, auth }) => (
               onClick={toggleColorMode}
             />
             {auth.user ? (
-              <Button
-                variant="solid"
-                size="md"
-                ml={2}
-                backgroundColor="teal.400"
-                color="white"
-                colorScheme="green"
-                onClick={(e) => auth.signout()}
-              >
-                LogOut
-              </Button>
+              <HStack alignItems="center">
+                <Avatar
+                  size="sm"
+                  name={auth.user.displayName}
+                  src={auth.user.photoURL}
+                  mr={2}
+                />
+                <Button
+                  variant="solid"
+                  size="md"
+                  ml={2}
+                  backgroundColor="teal.400"
+                  color="white"
+                  colorScheme="green"
+                  onClick={(e) => auth.signout()}
+                >
+                  LogOut
+                </Button>
+              </HStack>
             ) : (
               <>
                 <Button
@@ -79,6 +96,7 @@ const LandingPage = ({ toggleColorMode, auth }) => (
                   mr={2}
                   backgroundColor="gray.100"
                   color="black"
+                  leftIcon={<FaGoogle />}
                   onClick={(e) => auth.signinWithGoogle()}
                 >
                   Google
@@ -90,13 +108,14 @@ const LandingPage = ({ toggleColorMode, auth }) => (
                   backgroundColor="teal.400"
                   color="white"
                   colorScheme="green"
+                  leftIcon={<FaGithub />}
                   onClick={(e) => auth.signinWithGithub()}
                 >
                   Github
                 </Button>
               </>
             )}
-          </Box>
+          </HStack>
         </Stack>
       </Box>
       <Box>
@@ -112,7 +131,7 @@ const LandingPage = ({ toggleColorMode, auth }) => (
             First Open Source Idea Incubator
           </Heading>
           <Text>
-            Current user: <Code>{auth.user ? auth.user.email : 'None'}</Code>
+            Current user: <Code>{auth.user ? auth.user.email : 'None'}</Code> | {auth.user?.displayName}
           </Text>
           <Text>
             A place to share ideas, have discussions & build solutions.
