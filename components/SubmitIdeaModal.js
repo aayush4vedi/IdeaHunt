@@ -95,7 +95,7 @@ const SubmitIdeaModal = () => {
           transform: 'scale(0.95)'
         }}
       >
-        Sumbit An Idea
+        + Sumbit An Idea
       </Button>
 
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
