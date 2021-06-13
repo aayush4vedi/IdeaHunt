@@ -1,27 +1,16 @@
 import {
-  ChakraProvider,
   Box,
   Stack,
   Button,
-  Icon,
   Heading,
   Text,
   Center,
-  Link,
-  IconButton,
-  Code,
-  Avatar,
-  HStack
+  Code
 } from '@chakra-ui/react';
 
-import {
-  FaEllo,
-  FaSun,
-  FaMoon,
-  FaArrowRight,
-  FaGithub,
-  FaGoogle
-} from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const LandingPage = ({ toggleColorMode, auth }) => (
   <Box
@@ -31,93 +20,7 @@ const LandingPage = ({ toggleColorMode, auth }) => (
     height="100vh"
   >
     <Stack spacing={2} flexDirection="column" ml={20} mr={20} minHeight="80vh">
-      <Box mt={4}>
-        <Stack
-          spacing={2}
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Box>
-            <IconButton
-              icon={<FaEllo />}
-              size="xl"
-              isRound
-              variant="ghost"
-              mr={5}
-            />
-            <Link
-              href="#"
-              isExternal
-              fontWeight="bold"
-              textAlign="left"
-              fontSize="lg"
-              ml={5}
-            >
-              IdeaHunt
-            </Link>
-          </Box>
-          <HStack>
-            <IconButton
-              aria-label="icon"
-              icon={<FaSun />}
-              size="md"
-              isRound
-              variant="ghost"
-              mr={5}
-              onClick={toggleColorMode}
-            />
-            {auth.user ? (
-              <HStack alignItems="center">
-                <Avatar
-                  size="sm"
-                  name={auth.user.displayName}
-                  src={auth.user.photoURL}
-                  mr={2}
-                />
-                <Button
-                  variant="solid"
-                  size="md"
-                  ml={2}
-                  backgroundColor="teal.400"
-                  color="white"
-                  colorScheme="green"
-                  onClick={(e) => auth.signout()}
-                >
-                  LogOut
-                </Button>
-              </HStack>
-            ) : (
-              <>
-                <Button
-                  variant="ghost"
-                  size="md"
-                  colorScheme="whiteAlpha"
-                  mr={2}
-                  backgroundColor="gray.100"
-                  color="black"
-                  leftIcon={<FaGoogle />}
-                  onClick={(e) => auth.signinWithGoogle()}
-                >
-                  Google
-                </Button>
-                <Button
-                  variant="solid"
-                  size="md"
-                  ml={2}
-                  backgroundColor="teal.400"
-                  color="white"
-                  colorScheme="green"
-                  leftIcon={<FaGithub />}
-                  onClick={(e) => auth.signinWithGithub()}
-                >
-                  Github
-                </Button>
-              </>
-            )}
-          </HStack>
-        </Stack>
-      </Box>
+      <Header auth={auth} toggleColorMode={toggleColorMode} />
       <Box>
         <Center display="flex" flexDirection="column" mt={200} mb={100}>
           <Heading
@@ -131,7 +34,8 @@ const LandingPage = ({ toggleColorMode, auth }) => (
             First Open Source Idea Incubator
           </Heading>
           <Text>
-            Current user: <Code>{auth.user ? auth.user.email : 'None'}</Code> | {auth.user?.displayName}
+            Current user: <Code>{auth.user ? auth.user.email : 'None'}</Code> |{' '}
+            {auth.user?.displayName}
           </Text>
           <Text>
             A place to share ideas, have discussions & build solutions.
@@ -151,39 +55,8 @@ const LandingPage = ({ toggleColorMode, auth }) => (
           </Button>
         </Center>
       </Box>
+      <Footer/>
     </Stack>
-    <Box ml={60} mr={60}>
-      <Stack spacing={2}>
-        <Stack
-          spacing={20}
-          flexDirection="row"
-          justifyContent="space-between"
-          display="flex"
-          alignItems="flex-end"
-          ml={80}
-          mr={80}
-        >
-          <Link href="#" color="gray.500" fontSize="xs">
-            Home
-          </Link>
-          <Link href="#" color="gray.500" fontSize="xs">
-            Privacy
-          </Link>
-          <Link href="#" color="gray.500" fontSize="xs">
-            Terms
-          </Link>
-        </Stack>
-        <Text
-          display="flex"
-          flexDirection="row"
-          justifyContent="center"
-          color="gray.500"
-          fontSize="xs"
-        >
-          Made by @aayush.4vedi
-        </Text>
-      </Stack>
-    </Box>
   </Box>
 );
 
