@@ -50,6 +50,8 @@ const LandingPage = ({ toggleColorMode, auth }) => (
             color="white"
             colorScheme="red"
             borderRadius="full"
+            as="a"
+            href='/dashboard'
           >
             Get Started
           </Button>
