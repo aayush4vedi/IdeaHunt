@@ -41,7 +41,7 @@ const IdeaListItem = ({ idea }) => {
           <Text color={'gray.500'}>{idea.description}</Text>
         </Stack>
         <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
-          <Avatar src="" alt="" size="2xs" />
+          <Avatar src="" alt="" size="2xs"/>
           {idea ? (
             <Stack direction={'column'} spacing={0} fontSize={'sm'}>
               <Text fontWeight={600}>{idea?.authorId}</Text>

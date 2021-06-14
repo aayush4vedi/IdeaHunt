@@ -6,6 +6,7 @@ import { useAuth } from '@/lib/auth';
 import SubmitIdeaModal from '@/components/SubmitIdeaModal';
 import IdeaList from '@/components/IdeaList';
 import fetcher from '@/utils/fetcher';
+import DashboardShell from '@/components/DashboardShell';
 
 const Dashboard = () => {
   const auth = useAuth();
@@ -13,19 +14,23 @@ const Dashboard = () => {
 
   const { data } = useSWR('/api/ideas', fetcher);
   return (
-    <>
-      <Flex
-        as="main"
-        direction="column"
-        align="center"
-        justify="center"
-        // h="100vh"
-        backgroundColor="gray.100"
-      >
-        <SubmitIdeaModal />
-        {data ? <IdeaList ideas={data.ideas} /> : <IdeaList ideas={[]} />}
-      </Flex>
-    </>
+    // <>
+    //   <DashboardHeader />
+    //   <Flex
+    //     as="main"
+    //     direction="column"
+    //     align="center"
+    //     justify="center"
+    //     // h="100vh"
+    //     backgroundColor="gray.100"
+    //   >
+    //     <SubmitIdeaModal />
+    //     {data ? <IdeaList ideas={data.ideas} /> : <IdeaList ideas={[]} />}
+    //   </Flex>
+    // </>
+    <DashboardShell>
+      {data ? <IdeaList ideas={data.ideas} /> : <IdeaList ideas={[]} />}
+    </DashboardShell>
   );
 };
 

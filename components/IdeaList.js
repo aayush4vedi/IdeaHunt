@@ -9,14 +9,13 @@ const IdeaList = ({ ideas }) => {
     ideaList.push(<IdeaListItem idea={idea} />);
   });
   return ideaList.length == 0 ? (
-    <>
-      {' '}
+    <Box mb={5}>
       <IdeaListItemPlacebo />
       <IdeaListItemPlacebo />
-      <IdeaListItemPlacebo />{' '}
-    </>
+      <IdeaListItemPlacebo />
+    </Box>
   ) : (
-    <Box>{ideaList}</Box>
+    <Box mb={5}>{ideaList}</Box>
   );
 };
 

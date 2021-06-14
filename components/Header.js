@@ -29,7 +29,7 @@ const Header = ({ auth, toggleColorMode }) => {
             size="xl"
             isRound
             variant="ghost"
-            mr={5}
+            mr={2}
             as="a"
             href="/"
           />
@@ -39,7 +39,7 @@ const Header = ({ auth, toggleColorMode }) => {
             fontWeight="bold"
             textAlign="left"
             fontSize="lg"
-            ml={5}
+            ml={2}
           >
             IdeaHunt
           </Link>
