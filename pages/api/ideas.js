@@ -5,7 +5,7 @@ export default async (_, res) => {
   const ideas = [];
   if (snapshot.empty) {
     console.log('No matching documents.');
-    res.status(500).json("Something Went Wrong!");
+    res.status(500).json('Something Went Wrong!');
   } else {
     snapshot.forEach((doc) => {
       ideas.push({ id: doc.id, ...doc.data() });
