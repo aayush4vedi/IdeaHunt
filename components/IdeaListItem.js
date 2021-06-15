@@ -1,58 +1,101 @@
 import {
   Box,
-  Center,
-  Heading,
-  Text,
   Stack,
-  Avatar,
-  useColorModeValue
+  IconButton,
+  Text,
+  Tag,
+  TagLeftIcon,
+  TagLabel,
+  Heading,
+  Avatar
 } from '@chakra-ui/react';
+import {
+  FaChevronCircleUp,
+  FaChevronCircleDown,
+  FaLock,
+  FaLockOpen
+} from 'react-icons/fa';
 import { parseISO, format } from 'date-fns';
 
 const IdeaListItem = ({ idea }) => {
   return (
-    <Center py={2}>
+    <Box py={4}>
       <Box
-        maxW="100%"
-        w={'full'}
-        bg={useColorModeValue('white', 'gray.900')}
-        boxShadow={'xl'}
-        rounded={'md'}
+        bg="white"
+        boxShadow={'md'}
         p={6}
         overflow={'hidden'}
+        borderRadius="md"
       >
-        <Stack>
-          <Text
-            color={'green.500'}
-            textTransform={'uppercase'}
-            fontWeight={800}
-            fontSize={'sm'}
-            letterSpacing={1.1}
-          >
-            Tag
-          </Text>
-          <Heading
-            color={useColorModeValue('gray.700', 'white')}
-            fontSize={'2xl'}
-            fontFamily={'body'}
-          >
-            {idea.title}
-          </Heading>
-          <Text color={'gray.500'}>{idea.description}</Text>
-        </Stack>
-        <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
-          <Avatar src="" alt="" size="2xs"/>
-          {idea ? (
-            <Stack direction={'column'} spacing={0} fontSize={'sm'}>
-              <Text fontWeight={600}>{idea?.authorId}</Text>
-              <Text color={'gray.500'}>
-                {format(parseISO(idea?.createdAt), 'PPpp')}
-              </Text>
+        <Stack spacing={2} flexDirection="row">
+          <Box mr={2} display="flex" alignItems="center">
+            <Stack spacing={2} alignItems="center">
+              <IconButton
+                aria-label="icon"
+                icon={<FaChevronCircleUp />}
+                size="lg"
+                variant="ghost"
+              />
+              <Text>42</Text>
+              <IconButton
+                aria-label="icon"
+                icon={<FaChevronCircleDown />}
+                size="lg"
+                variant="ghost"
+              />
             </Stack>
-          ) : null}
+          </Box>
+          <Box ml={5} cursor="pointer" w="100%">
+            <Stack spacing={2}>
+              <Box>
+                <Tag
+                  rounded="md"
+                  variant="subtle"
+                  colorScheme="red"
+                  mb={2}
+                  size="md"
+                  // maxW="15"
+                >
+                  Tag name
+                </Tag>
+              </Box>
+              <Heading as="h5">{idea.title}</Heading>
+              <Box mb={5}>
+                <Text noOfLines={2}>{idea.description}</Text>
+              </Box>
+              <Box>
+                <Tag rounded="md" colorScheme="blackAlpha" mr={5}>
+                  <TagLeftIcon boxSize="12px" as={FaLock} />
+                  <TagLabel>Unsolved</TagLabel>
+                </Tag>
+              </Box>
+              <Stack spacing={2} mt={2}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Box display="flex" mr={25}>
+                    <Avatar size="xs" name={''} src={''}></Avatar>
+                    <Text ml={2}>
+                      on {format(parseISO(idea?.createdAt), 'PPpp')}
+                    </Text>
+                  </Box>
+                  <Box display="flex" alignItems="end" ml={25}>
+                    <Text fontWeight="bold" textAlign="left" ml={5}>
+                      2 Submissions
+                    </Text>
+                    <Text fontWeight="bold" textAlign="left" ml={5}>
+                      15 Comments
+                    </Text>
+                  </Box>
+                </Box>
+              </Stack>
+            </Stack>
+          </Box>
         </Stack>
       </Box>
-    </Center>
+    </Box>
   );
 };
 

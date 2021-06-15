@@ -14,20 +14,6 @@ const Dashboard = () => {
 
   const { data } = useSWR('/api/ideas', fetcher);
   return (
-    // <>
-    //   <DashboardHeader />
-    //   <Flex
-    //     as="main"
-    //     direction="column"
-    //     align="center"
-    //     justify="center"
-    //     // h="100vh"
-    //     backgroundColor="gray.100"
-    //   >
-    //     <SubmitIdeaModal />
-    //     {data ? <IdeaList ideas={data.ideas} /> : <IdeaList ideas={[]} />}
-    //   </Flex>
-    // </>
     <DashboardShell>
       {data ? <IdeaList ideas={data.ideas} /> : <IdeaList ideas={[]} />}
     </DashboardShell>
