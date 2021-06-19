@@ -1,4 +1,3 @@
-import { useAuth } from '@/lib/auth';
 import {
   Box,
   Stack,
@@ -9,8 +8,9 @@ import {
   HStack
 } from '@chakra-ui/react';
 import Head from 'next/head';
-
 import { FaEllo, FaSun, FaMoon, FaGithub, FaGoogle } from 'react-icons/fa';
+
+import { useAuth } from '@/lib/auth';
 
 const Header = () => {
   const auth = useAuth()

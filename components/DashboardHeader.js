@@ -10,14 +10,25 @@ import {
   IconButton,
   InputRightElement,
   Avatar,
-  Stack
+  Stack,
+  HStack
 } from '@chakra-ui/react';
 import Head from 'next/head';
-import { FaEllo, FaSun, FaMoon, FaSearch } from 'react-icons/fa';
+import { FaEllo, FaSun, FaMoon, FaGithub, FaGoogle, FaSearch } from 'react-icons/fa';
+
+import { useAuth } from '@/lib/auth';
 
 const DashboardHeader = () => {
+  const auth = useAuth();
   return (
-    <Box backgroundColor="white" position="fixed" width="100%" zIndex="sticky" borderBottom="1px" borderColor="gray.200">
+    <Box
+      backgroundColor="white"
+      position="fixed"
+      width="100%"
+      zIndex="sticky"
+      borderBottom="1px"
+      borderColor="gray.200"
+    >
       <Box mt={2} mb={2} mr={20} ml={20}>
         <Head>
           <title>IdeaHunt | Dashboard</title>
@@ -72,7 +83,7 @@ const DashboardHeader = () => {
               />
             </InputGroup>
           </Stack>
-          <Box display="flex" alignItems="center">
+          {/* <Box display="flex" alignItems="center">
             <IconButton
               aria-label="icon"
               icon={<FaSun />}
@@ -83,7 +94,65 @@ const DashboardHeader = () => {
               // onClick={toggleColorMode}
             />
             <Avatar size="sm" />
-          </Box>
+          </Box> */}
+          <HStack>
+            <IconButton
+              aria-label="icon"
+              icon={<FaSun />}
+              size="md"
+              isRound
+              variant="ghost"
+              mr={5}
+            />
+            {auth?.user ? (
+              <HStack alignItems="center">
+                <Avatar
+                  size="sm"
+                  name={auth.user.displayName}
+                  src={auth.user.photoURL}
+                  mr={2}
+                />
+                <Button
+                  variant="solid"
+                  size="md"
+                  ml={2}
+                  backgroundColor="teal.400"
+                  color="white"
+                  colorScheme="teal"
+                  onClick={(e) => auth.signout()}
+                >
+                  LogOut
+                </Button>
+              </HStack>
+            ) : (
+              <>
+                <Button
+                  variant="ghost"
+                  size="md"
+                  colorScheme="whiteAlpha"
+                  mr={2}
+                  backgroundColor="gray.100"
+                  color="black"
+                  leftIcon={<FaGoogle />}
+                  onClick={(e) => auth.signinWithGoogle()}
+                >
+                  Google
+                </Button>
+                <Button
+                  variant="solid"
+                  size="md"
+                  ml={2}
+                  backgroundColor="teal.400"
+                  color="white"
+                  colorScheme="green"
+                  leftIcon={<FaGithub />}
+                  onClick={(e) => auth.signinWithGithub()}
+                >
+                  Github
+                </Button>
+              </>
+            )}
+          </HStack>
         </Stack>
       </Box>
     </Box>
