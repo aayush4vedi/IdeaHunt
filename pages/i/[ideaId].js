@@ -29,19 +29,46 @@ export async function getStaticProps(context) {
 export async function getStaticPaths() {
   try {
     const { ideas } = await getAllIdeas();
+    console.log(ideas);
 
-    // const paths = ideas.map((idea) => ({
-    //   params: {
-    //     ideaId: idea.id.toString()
-    //   }
-    // }));
-    const paths = [
-      {
-        params: {
-          ideaId: 'H1lqUQkwko3C5T4nCiJs'
+    if (!ideas) {
+      ideas = [
+        {
+          id: '2KbiKu3OrSxIcMrEgNtS',
+          createdAt: '2021-06-19T21:29:52.777Z',
+          title: 'Eurekea',
+          authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2',
+          description: 'sighhhh'
+        },
+        {
+          id: 'H1lqUQkwko3C5T4nCiJs',
+          createdAt: '2021-06-19T21:12:14.221Z',
+          authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2',
+          description: 'the first!!',
+          title: 'FirstOne'
+        },
+        {
+          id: 'UbI9SpgjIpLANh3GtqMJ',
+          createdAt: '2021-06-19T21:34:42.691Z',
+          description: 'Being human is so boarrring',
+          title: 'Dehumaniator',
+          authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2'
         }
-      } // See the "paths" section below
-    ];
+      ];
+    }
+    // const paths = [
+    //   {
+    //     params: {
+    //       ideaId: 'H1lqUQkwko3C5T4nCiJs'
+    //     }
+    //   } // See the "paths" section below
+    // ];
+
+    const paths = ideas.map((idea) => ({
+      params: {
+        ideaId: idea.id.toString()
+      }
+    }));
 
     return {
       paths,
