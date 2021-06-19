@@ -21,7 +21,7 @@ export async function getStaticProps(context) {
     //Incremental Static Regeneration : Next.js will attempt to re-generate the page:
     // - When a request comes in
     // - At most once every 10 seconds
-    unstable_revalidate: 10 // In seconds
+    revalidate: 10 // In seconds note: dont use 'unstable_validate' here
   };
 }
 
@@ -84,7 +84,7 @@ const Idea = ({ thisIdeaContent, initialComments }) => {
         </FormControl>
       </Box>
       <Box>
-        {allComments.map((comment) => (
+        {allComments?.map((comment) => (
           <Comment key={comment.id} {...comment} />
         ))}
       </Box>
