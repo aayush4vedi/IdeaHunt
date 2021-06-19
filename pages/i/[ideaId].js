@@ -29,9 +29,9 @@ export async function getStaticProps(context) {
 export async function getStaticPaths() {
   try {
     let { ideas } = await getAllIdeas();
-    console.log(ideas);
-    
-    if (!ideas) {
+    console.log('>> ideas#1: ', ideas);
+
+    if (ideas === undefined) {
       ideas = [
         {
           id: '2KbiKu3OrSxIcMrEgNtS',
@@ -56,7 +56,8 @@ export async function getStaticPaths() {
         }
       ];
     }
-    
+    console.log('>> ideas#1: ', ideas);
+
     // const { ideas } = await getAllIdeas();
     // const paths = [
     //   {
