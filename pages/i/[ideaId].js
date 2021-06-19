@@ -31,13 +31,13 @@ export async function getStaticPaths() {
     const { ideas } = await getAllIdeas();
     const paths = ideas.map((idea) => ({
       params: {
-        ideaId: idea.id.toString()
+        ideaId: [idea.id.toString()]
       }
     }));
 
     return {
       paths,
-      fallback: true //if false, all other pages will go 404
+      fallback: false //if false, all other pages will go 404
     };
   } catch (error) {
     console.log({ error });
