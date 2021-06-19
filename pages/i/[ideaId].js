@@ -17,8 +17,6 @@ import IdeaListItem from '@/components/IdeaListItem';
 import IdeaListItemPlacebo from '@/components/IdeaListItemPlacebo';
 
 export async function getStaticProps(context) {
-  console.log('---------> context.params : ', context.params);
-
   // const ideaId = context.params.ideaId;
 
   let ideaId = context.params.ideaId;
@@ -28,10 +26,12 @@ export async function getStaticProps(context) {
   const { comments } = await getAllComments(ideaId);
   const thisIdeaContent = await getAnIdea(ideaId);
 
+  console.log(" $$$$$$$$$ thisIdeaContent : ", thisIdeaContent);
+
   return {
     props: {
       initialComments: comments,
-      thisIdeaContent: thisIdeaContent
+      thisIdeaContent: thisIdeaContent ? thisIdeaContent : null
     },
     //Incremental Static Regeneration : Next.js will attempt to re-generate the page:
     // - When a request comes in
