@@ -28,9 +28,9 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
   try {
-    const { ideas } = await getAllIdeas();
+    let { ideas } = await getAllIdeas();
     console.log(ideas);
-
+    
     if (!ideas) {
       ideas = [
         {
@@ -56,6 +56,8 @@ export async function getStaticPaths() {
         }
       ];
     }
+    
+    // const { ideas } = await getAllIdeas();
     // const paths = [
     //   {
     //     params: {
