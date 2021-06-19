@@ -40,11 +40,8 @@ export async function getStaticPaths() {
       fallback: true //if false, all other pages will go 404
     };
   } catch (error) {
-    console.log({error});
-    return {
-      [],
-      fallback: true //if false, all other pages will go 404
-    };
+    console.log({ error });
+    return { error };
   }
 }
 
