@@ -30,7 +30,7 @@ export async function getStaticPaths() {
   try {
     const { ideas } = await getAllIdeas();
 
-    if(myVar === undefined){
+    if(ideas === undefined){
       return {
         params: {},
         fallback: false
