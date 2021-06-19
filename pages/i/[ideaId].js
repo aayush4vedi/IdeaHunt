@@ -26,32 +26,31 @@ export async function getStaticProps(context) {
   };
 }
 
-// export async function getStaticPaths() {
-//   try {
-//     const { ideas } = await getAllIdeas();
+export async function getStaticPaths() {
+  try {
+    const { ideas } = await getAllIdeas();
 
-//     if (ideas === undefined || idea.length == 0) {
-//       return {
-//         params: {},
-//         fallback: false
-//       };
-//     }
-//     console.log('>>>>> ideas: ', ideas);
+    // const paths = ideas.map((idea) => ({
+    //   params: {
+    //     ideaId: idea.id.toString()
+    //   }
+    // }));
+    const paths = [
+      {
+        params: {
+          ideaId: 'H1lqUQkwko3C5T4nCiJs'
+        }
+      } // See the "paths" section below
+    ];
 
-//     const paths = ideas.map((idea) => ({
-//       params: {
-//         ideaId: idea.id.toString()
-//       }
-//     }));
-
-//     return {
-//       paths,
-//       fallback: false //if false, all other pages will go 404
-//     };
-//   } catch (error) {
-//     console.log('err: ', error);
-//   }
-// }
+    return {
+      paths,
+      fallback: false //if false, all other pages will go 404
+    };
+  } catch (error) {
+    console.log('err: ', error);
+  }
+}
 
 const Idea = ({ thisIdeaContent, initialComments }) => {
   const auth = useAuth();
