@@ -63,7 +63,7 @@ const SubmitIdeaModal = () => {
       description
     };
     setStateOfSubmitButton(spinningSubmitButton);
-    createIdea(newIdea);
+    const { id } = createIdea(newIdea);
     toast({
       title: 'Idea Submitted.',
       description: 'Thanks for sharing your idea with the world!',
@@ -75,7 +75,7 @@ const SubmitIdeaModal = () => {
     mutate(
       ['/api/ideas', auth.user.za],
       async (data) => {
-        return { ideas: [...data.ideas, newIdea] };
+        return { ideas: [...data.ideas, { id, ...newIdea }] };
       },
       false //use 'false' to mutate w/o revalidation
     );
