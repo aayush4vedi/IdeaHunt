@@ -8,7 +8,6 @@ import { useAuth } from '@/lib/auth';
 import { createComemnt } from '@/lib/db';
 import IdeaListItem from '@/components/IdeaListItem';
 import IdeaListItemPlacebo from '@/components/IdeaListItemPlacebo';
-import CommentPlacebo from '@/components/CommentPlacebo';
 
 export async function getStaticProps(context) {
   const ideaId = context.params.ideaId;
@@ -41,7 +40,11 @@ export async function getStaticPaths() {
       fallback: true //if false, all other pages will go 404
     };
   } catch (error) {
-    return { error };
+    console.log({error});
+    return {
+      [],
+      fallback: true //if false, all other pages will go 404
+    };
   }
 }
 
@@ -94,13 +97,9 @@ const Idea = ({ thisIdeaContent, initialComments }) => {
         </FormControl>
       </Box>
       <Box>
-        {allComments ? (
-          allComments.map((comment) => (
-            <Comment key={comment.id} {...comment} />
-          ))
-        ) : (
-          <CommentPlacebo />
-        )}
+        {allComments.map((comment) => (
+          <Comment key={comment.id} {...comment} />
+        ))}
       </Box>
     </Box>
   );
