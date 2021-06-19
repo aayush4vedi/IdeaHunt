@@ -1,5 +1,12 @@
 import { useRef, useState } from 'react';
-import { Box, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  PinInput
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 import Comment from '@/components/Comment';
@@ -10,7 +17,14 @@ import IdeaListItem from '@/components/IdeaListItem';
 import IdeaListItemPlacebo from '@/components/IdeaListItemPlacebo';
 
 export async function getStaticProps(context) {
-  const ideaId = context.params.ideaId;
+  print('---------> context.params : ', context.params);
+
+  // const ideaId = context.params.ideaId;
+
+  let ideaId = context.params.ideaId;
+  if (ideaId === undefined) {
+    ideaId = null;
+  }
   const { comments } = await getAllComments(ideaId);
   const thisIdeaContent = await getAnIdea(ideaId);
 
