@@ -29,9 +29,16 @@ export async function getStaticProps(context) {
 export async function getStaticPaths() {
   try {
     const { ideas } = await getAllIdeas();
+
+    if(myVar === undefined){
+      return {
+        params: {},
+        fallback: false
+      }
+    }
     const paths = ideas.map((idea) => ({
       params: {
-        ideaId: [idea.id.toString()]
+        ideaId: idea.id.toString()
       }
     }));
 
@@ -40,7 +47,7 @@ export async function getStaticPaths() {
       fallback: false //if false, all other pages will go 404
     };
   } catch (error) {
-    console.log({ error });
+    console.log("err: ", error);
     return { error };
   }
 }
