@@ -13,7 +13,7 @@ import Footer from '@/components/Footer';
 import DashboardHeader from '@/components/DashboardHeader';
 import SideNav from '@/components/SideNav';
 
-const DashboardShell = ({children}) => {
+const DashboardShell = ({ children }) => {
   return (
     <Box
       backgroundColor="gray.100"
@@ -28,7 +28,7 @@ const DashboardShell = ({children}) => {
         // mr={20}
         minHeight="80vh"
       >
-        <DashboardHeader/>
+        <DashboardHeader />
         <Box>
           <SideNav
             display={['none', null, 'block']}
@@ -37,7 +37,9 @@ const DashboardShell = ({children}) => {
           />
           <Box pl={[0, null, '18rem']} mt="4rem">
             <Box as="section" minHeight="calc(100vh - 4rem)">
-              <Box px={10} py={10}>{children}</Box>
+              <Box px={10} py={10}>
+                {children}
+              </Box>
             </Box>
             {/* <Footer /> */}
           </Box>

@@ -73,11 +73,11 @@ const SubmitIdeaModal = () => {
     });
     //SWR-mutation
     mutate(
-      '/api/ideas',
+      ['/api/ideas', auth.user.za],
       async (data) => {
         return { ideas: [...data.ideas, newIdea] };
       },
-      false   //use 'false' to mutate w/o revalidation
+      false //use 'false' to mutate w/o revalidation
     );
     onClose();
   };
