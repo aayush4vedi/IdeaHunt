@@ -7,8 +7,6 @@ import LandingPage from '../components/LandingPage';
 import { useColorMode } from '@chakra-ui/react';
 
 const Home = () => {
-  const auth = useAuth();
-
   // const {
   //   register,
   //   handleSubmit,
@@ -62,7 +60,7 @@ const Home = () => {
   // </main>
   // </div>
 
-  return <LandingPage children={toggleColorMode} auth = {auth} />;
+  return <LandingPage />;
 };
 
 export default Home;
