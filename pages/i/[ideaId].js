@@ -26,7 +26,7 @@ export async function getStaticProps(context) {
   const { comments } = await getAllComments(ideaId);
   const thisIdeaContent = await getAnIdea(ideaId);
 
-  console.log(" $$$$$$$$$ thisIdeaContent : ", thisIdeaContent);
+  console.log(' $$$$$$$$$ comments : ', comments);
 
   return {
     props: {
@@ -41,59 +41,55 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  try {
-    let { ideas } = await getAllIdeas();
-    console.log('>> ideas#1: ', ideas);
+  let { ideas } = await getAllIdeas();
+  console.log('>> ideas#1: ', ideas);
 
-    if (ideas === undefined) {
-      ideas = [
-        {
-          id: '2KbiKu3OrSxIcMrEgNtS',
-          createdAt: '2021-06-19T21:29:52.777Z',
-          title: 'Eurekea',
-          authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2',
-          description: 'sighhhh'
-        },
-        {
-          id: 'H1lqUQkwko3C5T4nCiJs',
-          createdAt: '2021-06-19T21:12:14.221Z',
-          authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2',
-          description: 'the first!!',
-          title: 'FirstOne'
-        },
-        {
-          id: 'UbI9SpgjIpLANh3GtqMJ',
-          createdAt: '2021-06-19T21:34:42.691Z',
-          description: 'Being human is so boarrring',
-          title: 'Dehumaniator',
-          authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2'
-        }
-      ];
-    }
-    console.log('>> ideas#1: ', ideas);
-
-    // const { ideas } = await getAllIdeas();
-    // const paths = [
-    //   {
-    //     params: {
-    //       ideaId: 'H1lqUQkwko3C5T4nCiJs'
-    //     }
-    //   } // See the "paths" section below
-    // ];
-
-    const paths = ideas.map((idea) => ({
-      params: {
-        ideaId: idea.id.toString()
+  if (ideas === undefined) {
+    ideas = [
+      {
+        id: '2KbiKu3OrSxIcMrEgNtS',
+        createdAt: '2021-06-19T21:29:52.777Z',
+        title: 'Eurekea',
+        authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2',
+        description: 'sighhhh'
+      },
+      {
+        id: 'H1lqUQkwko3C5T4nCiJs',
+        createdAt: '2021-06-19T21:12:14.221Z',
+        authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2',
+        description: 'the first!!',
+        title: 'FirstOne'
+      },
+      {
+        id: 'UbI9SpgjIpLANh3GtqMJ',
+        createdAt: '2021-06-19T21:34:42.691Z',
+        description: 'Being human is so boarrring',
+        title: 'Dehumaniator',
+        authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2'
       }
-    }));
-
-    return {
-      paths,
-      fallback: false //if false, all other pages will go 404
-    };
-  } catch (error) {
-    console.log('err: ', error);
+    ];
   }
+  console.log('>> ideas#1: ', ideas);
+
+  // const { ideas } = await getAllIdeas();
+  // const paths = [
+  //   {
+  //     params: {
+  //       ideaId: 'H1lqUQkwko3C5T4nCiJs'
+  //     }
+  //   } // See the "paths" section below
+  // ];
+
+  const paths = ideas.map((idea) => ({
+    params: {
+      ideaId: idea.id.toString()
+    }
+  }));
+
+  return {
+    paths,
+    fallback: false //if false, all other pages will go 404
+  };
 }
 
 // const Idea = ({ thisIdeaContent, initialComments }) => {
@@ -131,7 +127,7 @@ const Idea = (props) => {
       margin="0 auto"
     >
       <Box>
-        {props?.thisIdeaContent ? (
+        {props.thisIdeaContent ? (
           <IdeaListItem idea={props.thisIdeaContent} />
         ) : (
           <IdeaListItemPlacebo />
