@@ -30,12 +30,14 @@ export async function getStaticPaths() {
   try {
     const { ideas } = await getAllIdeas();
 
-    if(ideas === undefined){
+    if (ideas === undefined || idea.length == 0) {
       return {
         params: {},
         fallback: false
-      }
+      };
     }
+    console.log('>>>>> ideas: ', ideas);
+
     const paths = ideas.map((idea) => ({
       params: {
         ideaId: idea.id.toString()
@@ -47,8 +49,7 @@ export async function getStaticPaths() {
       fallback: false //if false, all other pages will go 404
     };
   } catch (error) {
-    console.log("err: ", error);
-    return { error };
+    console.log('err: ', error);
   }
 }
 
