@@ -30,8 +30,8 @@ export async function getStaticProps(context) {
 
   return {
     props: {
-      initialComments: comments,
-      thisIdeaContent: thisIdeaContent ? thisIdeaContent : null
+      initialComments: comments === undefined ? null : comments,
+      thisIdeaContent: thisIdeaContent === undefined ? null : thisIdeaContent
     },
     //Incremental Static Regeneration : Next.js will attempt to re-generate the page:
     // - When a request comes in
@@ -102,7 +102,7 @@ const Idea = (props) => {
   const router = useRouter();
   const inputEl = useRef(null);
 
-  const [allComments, setAllComments] = useState(props?.initialComments);
+  const [allComments, setAllComments] = useState(props.initialComments);
 
   const onsubmitfn = (e) => {
     e.preventDefault();
