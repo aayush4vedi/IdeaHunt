@@ -17,7 +17,7 @@ import IdeaListItem from '@/components/IdeaListItem';
 import IdeaListItemPlacebo from '@/components/IdeaListItemPlacebo';
 
 export async function getStaticProps(context) {
-  print('---------> context.params : ', context.params);
+  console.log('---------> context.params : ', context.params);
 
   // const ideaId = context.params.ideaId;
 
