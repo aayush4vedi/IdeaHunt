@@ -96,11 +96,13 @@ export async function getStaticPaths() {
   }
 }
 
-const Idea = ({ thisIdeaContent, initialComments }) => {
+// const Idea = ({ thisIdeaContent, initialComments }) => {
+const Idea = (props) => {
   const auth = useAuth();
   const router = useRouter();
   const inputEl = useRef(null);
-  const [allComments, setAllComments] = useState(initialComments);
+
+  const [allComments, setAllComments] = useState(props?.initialComments);
 
   const onsubmitfn = (e) => {
     e.preventDefault();
@@ -129,8 +131,8 @@ const Idea = ({ thisIdeaContent, initialComments }) => {
       margin="0 auto"
     >
       <Box>
-        {thisIdeaContent ? (
-          <IdeaListItem idea={thisIdeaContent} />
+        {props?.thisIdeaContent ? (
+          <IdeaListItem idea={props.thisIdeaContent} />
         ) : (
           <IdeaListItemPlacebo />
         )}
