@@ -27,6 +27,7 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
   const { ideas } = await getAllIdeas();
+  console.log('here1: ideas = ', ideas);
   const paths = ideas.map((idea) => ({
     params: {
       ideaId: idea.id.toString()
@@ -44,6 +45,7 @@ const Idea = ({ thisIdeaContent, initialComments }) => {
   const router = useRouter();
   const inputEl = useRef(null);
   const [allComments, setAllComments] = useState(initialComments);
+  console.log('here2: allComments = ', allComments);
 
   const onsubmitfn = (e) => {
     e.preventDefault();
@@ -72,7 +74,7 @@ const Idea = ({ thisIdeaContent, initialComments }) => {
       margin="0 auto"
     >
       <Box>
-        <IdeaListItem idea={thisIdeaContent}/>
+        <IdeaListItem idea={thisIdeaContent} />
       </Box>
       <Box as="Form" onSubmit={onsubmitfn}>
         <FormControl my={8}>
@@ -84,9 +86,11 @@ const Idea = ({ thisIdeaContent, initialComments }) => {
         </FormControl>
       </Box>
       <Box>
-        {allComments?.map((comment) => (
-          <Comment key={comment.id} {...comment} />
-        ))}
+        {allComments
+          ? allComments.map((comment) => (
+              <Comment key={comment.id} {...comment} />
+            ))
+          : []}
       </Box>
     </Box>
   );
