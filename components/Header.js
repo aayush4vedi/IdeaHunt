@@ -1,3 +1,4 @@
+import { useAuth } from '@/lib/auth';
 import {
   Box,
   Stack,
@@ -11,7 +12,8 @@ import Head from 'next/head';
 
 import { FaEllo, FaSun, FaMoon, FaGithub, FaGoogle } from 'react-icons/fa';
 
-const Header = ({ auth, toggleColorMode }) => {
+const Header = () => {
+  const auth = useAuth()
   return (
     <Box mt={4}>
       <Head>
@@ -29,7 +31,7 @@ const Header = ({ auth, toggleColorMode }) => {
             size="xl"
             isRound
             variant="ghost"
-            mr={5}
+            mr={2}
             as="a"
             href="/"
           />
@@ -39,7 +41,7 @@ const Header = ({ auth, toggleColorMode }) => {
             fontWeight="bold"
             textAlign="left"
             fontSize="lg"
-            ml={5}
+            ml={2}
           >
             IdeaHunt
           </Link>
@@ -52,7 +54,6 @@ const Header = ({ auth, toggleColorMode }) => {
             isRound
             variant="ghost"
             mr={5}
-            onClick={toggleColorMode}
           />
           {auth?.user ? (
             <HStack alignItems="center">

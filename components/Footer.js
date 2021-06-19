@@ -91,56 +91,66 @@ const SocialButton = ({ children, label, href }) => {
 
 const Footer = () => {
   return (
-    <Box
-    //   bg={useColorModeValue('gray.50', 'gray.900')}
-      color={useColorModeValue('gray.700', 'gray.200')}
-      position="fixed"
-      bottom="0"
-      w="90%"
-    >
-      <Container
-        as={Stack}
-        maxW={'6xl'}
-        py={2}
-        spacing={4}
-        justify={'center'}
-        align={'center'}
-      >
-        {/* <Logo /> TODO: */}
-        <Stack direction={'row'} spacing={6}>
-          <Link href={'#'} color="gray.500" fontSize="xs">Home</Link>
-          <Link href={'#'} color="gray.500" fontSize="xs">Privacy</Link>
-          <Link href={'#'} color="gray.500" fontSize="xs">Terms</Link>
-        </Stack>
-      </Container>
-
+    <Box >
       <Box
-        borderTopWidth={1}
-        borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.700')}
+        //   bg={useColorModeValue('gray.50', 'gray.900')}
+        color={useColorModeValue('gray.700', 'gray.200')}
+        position="fixed"
+        bottom="0"
+        w="100%"
       >
         <Container
           as={Stack}
           maxW={'6xl'}
           py={2}
-          direction={{ base: 'column', md: 'row' }}
           spacing={4}
-          justify={{ base: 'center', md: 'space-between' }}
-          align={{ base: 'center', md: 'center' }}
+          justify={'center'}
+          align={'center'}
         >
-          <Text color="gray.500" fontSize="xs">made by @aayusy.4vedi</Text>
+          {/* <Logo /> TODO: */}
           <Stack direction={'row'} spacing={6}>
-            <SocialButton label={'Twitter'} href={'#'}>
-              <FaTwitter />
-            </SocialButton>
-            <SocialButton label={'YouTube'} href={'#'}>
-              <FaYoutube />
-            </SocialButton>
-            <SocialButton label={'Instagram'} href={'#'}>
-              <FaInstagram />
-            </SocialButton>
+            <Link href={'#'} color="gray.500" fontSize="xs">
+              Home
+            </Link>
+            <Link href={'#'} color="gray.500" fontSize="xs">
+              Privacy
+            </Link>
+            <Link href={'#'} color="gray.500" fontSize="xs">
+              Terms
+            </Link>
           </Stack>
         </Container>
+
+        <Box
+          borderTopWidth={1}
+          borderStyle={'solid'}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
+        >
+          <Container
+            as={Stack}
+            maxW={'6xl'}
+            py={2}
+            direction={{ base: 'column', md: 'row' }}
+            spacing={4}
+            justify={{ base: 'center', md: 'space-between' }}
+            align={{ base: 'center', md: 'center' }}
+          >
+            <Text color="gray.500" fontSize="xs">
+              made by @aayush.4vedi
+            </Text>
+            <Stack direction={'row'} spacing={6}>
+              <SocialButton label={'Twitter'} href={'#'}>
+                <FaTwitter />
+              </SocialButton>
+              <SocialButton label={'YouTube'} href={'#'}>
+                <FaYoutube />
+              </SocialButton>
+              <SocialButton label={'Instagram'} href={'#'}>
+                <FaInstagram />
+              </SocialButton>
+            </Stack>
+          </Container>
+        </Box>
       </Box>
     </Box>
   );

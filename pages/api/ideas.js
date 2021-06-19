@@ -1,16 +1,15 @@
-import db from '@/lib/firebase-admin';
+import { auth } from '@/lib/firebase-admin';
+import { getUserIdeas, getAllIdeas } from '@/lib/db-admin';
 
-export default async (_, res) => {
-  const snapshot = await db.collection('ideas').get();
-  const ideas = [];
-  if (snapshot.empty) {
-    console.log('No matching documents.');
-    res.status(500).json('Something Went Wrong!');
-  } else {
-    snapshot.forEach((doc) => {
-      ideas.push({ id: doc.id, ...doc.data() });
-    });
+export default async (req, res) => {
+  try {
+    const { uid } = await auth.verifyIdToken(req.headers.token);
+
+    const { ideas } = await getUserIdeas(uid);   //TODO: enable for switch
+    // const { ideas } = await getAllIdeas();
+
+    res.status(200).json({ ideas });
+  } catch (error) {
+    res.status(500).json({ error });
   }
-
-  res.status(200).json({ ideas });
 };
