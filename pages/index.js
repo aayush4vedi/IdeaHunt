@@ -7,7 +7,23 @@ import LandingPage from '../components/LandingPage';
 import { useColorMode } from '@chakra-ui/react';
 
 const Home = () => {
-  return <LandingPage />;
+  return (
+    <>
+      <Head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (document.cookie && document.cookie.includes('ideahunt-auth')) {
+                window.location.href = "/dashboard"
+              }
+            `
+          }}
+        />
+        <title>IdeaHunt | Home</title>
+      </Head>
+      <LandingPage />
+    </>
+  );
 };
 
 export default Home;
