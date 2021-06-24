@@ -1,12 +1,5 @@
 import { useRef, useState } from 'react';
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  PinInput
-} from '@chakra-ui/react';
+import { Box, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 import Comment from '@/components/Comment';
@@ -17,21 +10,14 @@ import IdeaListItem from '@/components/IdeaListItem';
 import IdeaListItemPlacebo from '@/components/IdeaListItemPlacebo';
 
 export async function getStaticProps(context) {
-  // const ideaId = context.params.ideaId;
-
-  let ideaId = context.params.ideaId;
-  if (ideaId === undefined) {
-    ideaId = null;
-  }
+  const ideaId = context.params.ideaId;
   const { comments } = await getAllComments(ideaId);
   const thisIdeaContent = await getAnIdea(ideaId);
 
-  console.log(' $$$$$$$$$ comments : ', comments);
-
   return {
     props: {
-      initialComments: comments === undefined ? null : comments,
-      thisIdeaContent: thisIdeaContent === undefined ? null : thisIdeaContent
+      initialComments: comments,
+      thisIdeaContent: thisIdeaContent
     },
     //Incremental Static Regeneration : Next.js will attempt to re-generate the page:
     // - When a request comes in
@@ -41,45 +27,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  let { ideas } = await getAllIdeas();
-  console.log('>> ideas#1: ', ideas);
-
-  if (ideas === undefined) {
-    ideas = [
-      {
-        id: '2KbiKu3OrSxIcMrEgNtS',
-        createdAt: '2021-06-19T21:29:52.777Z',
-        title: 'Eurekea',
-        authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2',
-        description: 'sighhhh'
-      },
-      {
-        id: 'H1lqUQkwko3C5T4nCiJs',
-        createdAt: '2021-06-19T21:12:14.221Z',
-        authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2',
-        description: 'the first!!',
-        title: 'FirstOne'
-      },
-      {
-        id: 'UbI9SpgjIpLANh3GtqMJ',
-        createdAt: '2021-06-19T21:34:42.691Z',
-        description: 'Being human is so boarrring',
-        title: 'Dehumaniator',
-        authorId: 'RYIkEgEJFec6adsAf9HrZ6J84BX2'
-      }
-    ];
-  }
-  console.log('>> ideas#1: ', ideas);
-
-  // const { ideas } = await getAllIdeas();
-  // const paths = [
-  //   {
-  //     params: {
-  //       ideaId: 'H1lqUQkwko3C5T4nCiJs'
-  //     }
-  //   } // See the "paths" section below
-  // ];
-
+  const { ideas } = await getAllIdeas();
   const paths = ideas.map((idea) => ({
     params: {
       ideaId: idea.id.toString()
@@ -88,17 +36,15 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false //if false, all other pages will go 404
+    fallback: true //if false, all other pages will go 404
   };
 }
 
-// const Idea = ({ thisIdeaContent, initialComments }) => {
-const Idea = (props) => {
+const Idea = ({ thisIdeaContent, initialComments }) => {
   const auth = useAuth();
   const router = useRouter();
   const inputEl = useRef(null);
-
-  const [allComments, setAllComments] = useState(props.initialComments);
+  const [allComments, setAllComments] = useState(initialComments);
 
   const onsubmitfn = (e) => {
     e.preventDefault();
@@ -127,8 +73,8 @@ const Idea = (props) => {
       margin="0 auto"
     >
       <Box>
-        {props.thisIdeaContent ? (
-          <IdeaListItem idea={props.thisIdeaContent} />
+        {thisIdeaContent ? (
+          <IdeaListItem idea={thisIdeaContent} />
         ) : (
           <IdeaListItemPlacebo />
         )}
@@ -144,8 +90,8 @@ const Idea = (props) => {
       </Box>
       <Box>
         {allComments.map((comment) => (
-          <Comment key={comment.id} {...comment} />
-        ))}
+            <Comment key={comment.id} {...comment} />
+          ))}
       </Box>
     </Box>
   );
