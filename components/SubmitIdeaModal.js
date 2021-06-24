@@ -11,18 +11,66 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Radio,
+  Textarea,
+  RadioGroup,
+  HStack,
   useDisclosure,
   Button,
+  FormHelperText,
+  Select,
+  Tag,
+  Box,
   useToast
 } from '@chakra-ui/react';
+import { CUIAutoComplete } from "chakra-ui-autocomplete";
+
 import { mutate } from 'swr';
 
 import { createIdea } from '@/lib/db';
 import { useAuth } from '@/lib/auth';
 
+
+//TODO: fetch these tags from db
+const tags = [
+  { value: "robotics", label: "Robotics" },
+  { value: "physics", label: "Physics" },
+  { value: "chemistry", label: "Chemistry" },
+  { value: "artificial-intelligence", label: "AI" },
+  { value: "machine-learning", label: "Machine Learning" },
+  { value: "data-science", label: "Data Science" },
+  { value: "business", label: "Business" },
+  { value: "entertainment", label: "Entertainment" }
+  { value: "e-commerce", label: "E-Commerce" }
+  { value: "food", label: "Food" }
+  { value: "gaming", label: "Gaming" }
+  { value: "software", label: "Software" }
+  { value: "app", label: "App" }
+  { value: "space", label: "Space" }
+  { value: "productivity", label: "Productivity" }
+];
+
+
 const SubmitIdeaModal = () => {
   const auth = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+
+
+  const [pickerItems, setPickerItems] = useState(tags);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const handleCreateItem = (item) => {
+    setPickerItems((curr) => [...curr, item]);
+    setSelectedItems((curr) => [...curr, item]);
+  };
+
+  const handleSelectedItemsChange = (selectedItems) => {
+    if (selectedItems) {
+      setSelectedItems(selectedItems);
+    }
+  };
+
 
   //set button to spinning on form submit
   const plainSubmitButton = (
@@ -55,13 +103,17 @@ const SubmitIdeaModal = () => {
     formState: { errors }
   } = useForm();
 
-  const onCreateIdea = ({ title, description }) => {
+  const onCreateIdea = ({ title, description , level}) => {
+
     const newIdea = {
       authorId: auth.user.uid,
       createdAt: new Date().toISOString(),
       title,
-      description
+      description,
+      level,
+      tags: selectedItems.map(x => x.value)
     };
+
     setStateOfSubmitButton(spinningSubmitButton);
     const { id } = createIdea(newIdea);
     toast({
@@ -98,34 +150,58 @@ const SubmitIdeaModal = () => {
         + Sumbit An Idea
       </Button>
 
-      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
+      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} size= "xl">
         <ModalOverlay />
         <ModalContent as="form" onSubmit={handleSubmit(onCreateIdea)}>
           <ModalHeader fontWeight="bold">Submit Your Idea</ModalHeader>
           <ModalCloseButton />
-          <ModalBody pb={6}>
+          <ModalBody pb={6} as="form">
             <FormControl>
               <FormLabel>Title</FormLabel>
               <Input
                 ref={initialRef}
                 placeholder="Enter title for your idea"
-                // defaultValue="title"
-                {...register('title', { required: true })}
+                {...register('title', { required: true },{ min: 50 })}
               />
-              {errors.exampleRequired && <span>This field is required</span>}
+              {errors.exampleRequired && <span>Atleast 50 words are required.</span>}
             </FormControl>
 
             <FormControl mt={4}>
-              <FormLabel>Summary</FormLabel>
-              <Input
-                as="Textarea"
-                placeholder="Write your description here"
-                size="md"
-                // defaultValue="description"
-                {...register('description', { required: true })}
-              />
+              <FormLabel>Select Difficulty Level</FormLabel>
+              <RadioGroup defaultValue="medium" name="level">
+                <HStack spacing="24px">
+                  <Radio value="easy" {...register('level')}>Easy</Radio>
+                  <Radio value="medium" {...register('level')}>Medium</Radio>
+                  <Radio value="hard" {...register('level')}>Hard</Radio>
+                </HStack>
+              </RadioGroup>
+              {/* <FormHelperText fontSize="xs">Difficulty level helps people find ideas of their level.</FormHelperText> */}
+           
+            </FormControl> 
+
+            <FormControl mt={4}>
+              <FormLabel>Description</FormLabel>
+              <Textarea placeholder="Write your description here" minH={40} {...register('description', { required: true })}/>
               {errors.exampleRequired && <span>This field is required</span>}
             </FormControl>
+
+            <Box mt={4} >
+              <CUIAutoComplete
+                label="Select Tags"
+                placeholder="Start typing..."
+                onCreateItem={handleCreateItem}
+                items={pickerItems}
+                tagStyleProps={{
+                  rounded: "full",
+                  fontSize: "xs"
+                }}
+                selectedItems={selectedItems}
+                onSelectedItemsChange={(changes) =>
+                  handleSelectedItemsChange(changes.selectedItems)
+                }
+              />
+            </Box>
+            
           </ModalBody>
 
           <ModalFooter>
