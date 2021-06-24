@@ -27,22 +27,17 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  try {
-    const { ideas } = await getAllIdeas();
-    const paths = ideas.map((idea) => ({
-      params: {
-        ideaId: idea.id.toString()
-      }
-    }));
+  const { ideas } = await getAllIdeas();
+  const paths = ideas.map((idea) => ({
+    params: {
+      ideaId: idea.id.toString()
+    }
+  }));
 
-    return {
-      paths,
-      fallback: true //if false, all other pages will go 404
-    };
-  } catch (error) {
-    console.log({ error });
-    return { error };
-  }
+  return {
+    paths,
+    fallback: true //if false, all other pages will go 404
+  };
 }
 
 const Idea = ({ thisIdeaContent, initialComments }) => {
@@ -95,8 +90,8 @@ const Idea = ({ thisIdeaContent, initialComments }) => {
       </Box>
       <Box>
         {allComments.map((comment) => (
-          <Comment key={comment.id} {...comment} />
-        ))}
+            <Comment key={comment.id} {...comment} />
+          ))}
       </Box>
     </Box>
   );

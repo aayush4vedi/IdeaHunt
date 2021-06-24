@@ -17,7 +17,7 @@ const LandingPage = () => {
   const auth = useAuth();
   return (
     <Box
-      backgroundColor="gray.100"
+      backgroundColor="white"
       minWidth="100%"
       minHeight="100vh"
       height="100vh"
