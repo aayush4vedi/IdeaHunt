@@ -12,8 +12,9 @@ import {
 import Footer from '@/components/Footer';
 import DashboardHeader from '@/components/DashboardHeader';
 import SideNav from '@/components/SideNav';
+import Filters from '@/components/Filters';
 
-const DashboardShell = ({ children }) => {
+const DashboardShell = ({ children, navtype }) => {
   return (
     <Box
       backgroundColor="gray.100"
@@ -30,11 +31,7 @@ const DashboardShell = ({ children }) => {
       >
         <DashboardHeader />
         <Box>
-          <SideNav
-            display={['none', null, 'block']}
-            maxWidth="18rem"
-            width="full"
-          />
+          <SideNav display={['none', null, 'block']}>{navtype}</SideNav>
           <Box pl={[0, null, '18rem']} mt="4rem">
             <Box as="section" minHeight="calc(100vh - 4rem)">
               <Box px={10} py={10}>

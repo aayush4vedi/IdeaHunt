@@ -10,7 +10,7 @@ const IdeaList = ({ ideas }) => {
     ideaList.push(
       <NextLink href="/i/[ideaId]" as={`/i/${idea.id}`} passHref>
         <Link cursor={'pointer'} style={{ textDecoration: 'none' }}>
-          <IdeaListItem idea={idea} />
+          <IdeaListItem idea={idea} noOfLines={2} />
         </Link>
       </NextLink>
     );

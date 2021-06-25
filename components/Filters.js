@@ -10,15 +10,15 @@ import {
   Center
 } from '@chakra-ui/react';
 
-const Filters = (props) => {
+const Filters = () => {
   // const inputBg = {light: '#EDF2F7', dark: 'gray.700'};
 
   return (
-    <Stack spacing={8} mb={8} {...props}>
+    <Stack spacing={8} mb={8}>
       <Box display="flex" alignItems="center" justifyContent="left">
         <HStack>
           <Center>
-            <Text mr={2}>{'Show my favourites'}</Text>
+            <Text mr={2}>{'Only show my submissions'}</Text>
             <Switch id="user-favourites" size="sm" />
           </Center>
         </HStack>

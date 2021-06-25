@@ -13,7 +13,7 @@ import { FaEllo, FaSun, FaMoon, FaGithub, FaGoogle } from 'react-icons/fa';
 import { useAuth } from '@/lib/auth';
 
 const Header = () => {
-  const auth = useAuth()
+  const auth = useAuth();
   return (
     <Box mt={4}>
       <Head>
