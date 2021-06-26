@@ -58,7 +58,6 @@ const IdeaListItem = ({ idea, noOfLines }) => {
                     p={(1, 0.5)}
                     size="xs"
                     fontSize="xs"
-                    // maxW="15"
                   >
                     {tag.label}
                   </Tag>
@@ -105,10 +104,10 @@ const IdeaListItem = ({ idea, noOfLines }) => {
                   </Box>
                   <Box display="flex" alignItems="end" ml={25}>
                     <Text fontWeight="bold" textAlign="left" ml={5}>
-                      {idea?.noOfComments} Comments
+                      {idea.noOfComments ? idea.noOfComments : '0'} Comments
                     </Text>
                     <Text fontWeight="bold" textAlign="left" ml={5}>
-                      {idea?.noOfSubmissions} Submissions
+                      {idea.noOfSubmissions ? idea.noOfSubmissions : '0'} Submissions
                     </Text>
                   </Box>
                 </Box>

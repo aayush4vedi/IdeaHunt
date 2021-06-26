@@ -12,7 +12,6 @@ import {
 import Footer from '@/components/Footer';
 import DashboardHeader from '@/components/DashboardHeader';
 import SideNav from '@/components/SideNav';
-import Filters from '@/components/Filters';
 
 const DashboardShell = ({ children, navtype }) => {
   return (
