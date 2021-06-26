@@ -1,14 +1,13 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
 import SubmitIdeaModal from '@/components/SubmitIdeaModal';
-import Filters from '@/components/Filters';
 
-const SideNav = (props) => {
+
+const SideNav = ({props, children}) => {
   return (
     <Box
       position="fixed"
       left="0"
-      width="100%"
+      width="18%"
       height="100%"
       top="4rem"
       right="0"
@@ -24,7 +23,7 @@ const SideNav = (props) => {
             fontSize="sm"
             p="6"
           >
-            <Filters />
+            {children}
             <SubmitIdeaModal />
           </Flex>
         </Box>

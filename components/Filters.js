@@ -9,17 +9,43 @@ import {
   Switch,
   Center
 } from '@chakra-ui/react';
+import { useRef, useState } from 'react';
+import { CUIAutoComplete } from 'chakra-ui-autocomplete';
 
-const Filters = (props) => {
-  // const inputBg = {light: '#EDF2F7', dark: 'gray.700'};
+import tags from '@/assets/tags';
+import { useSearch } from '@/lib/search';
+
+const Filters = () => {
+  const {
+    showMyPosts,
+    levels,
+    isSolved,
+    filterTags,
+    onShowMyPosts,
+    onFilterLevels,
+    onFilterIsSolved,
+    onChangeFilterTags,
+  } = useSearch();
+
+  const [pickerItems, setPickerItems] = useState(
+    tags
+      .filter((tag) => tag.value !== 'all')
+      .sort((a, b) => a.label.localeCompare(b.label))
+  );
+  const [selectedTags, setselectedTags] = useState(filterTags);
 
   return (
-    <Stack spacing={8} mb={8} {...props}>
+    <Stack spacing={8} mb={8}>
       <Box display="flex" alignItems="center" justifyContent="left">
         <HStack>
           <Center>
-            <Text mr={2}>{'Show my favourites'}</Text>
-            <Switch id="user-favourites" size="sm" />
+            <Text mr={2}>{'Show only my submissions'}</Text>
+            <Switch
+              id="my-submissions"
+              size="sm"
+              defaultChecked={showMyPosts}
+              onChange={(e) => onShowMyPosts(e.target.checked)}
+            />
           </Center>
         </HStack>
       </Box>
@@ -27,11 +53,16 @@ const Filters = (props) => {
         <Text mb={2} fontWeight="bold">
           {'Difficulty Level'}
         </Text>
-        <CheckboxGroup spacing={10}>
+        <CheckboxGroup
+          spacing={10}
+          onChange={onFilterLevels}
+          variantColor="teal"
+          value={levels}
+        >
           <HStack>
-            <Checkbox value="EASY">Easy</Checkbox>
-            <Checkbox value="MEDIUM">Medium</Checkbox>
-            <Checkbox value="HARD">Hard</Checkbox>
+            <Checkbox value="easy">Easy</Checkbox>
+            <Checkbox value="medium">Medium</Checkbox>
+            <Checkbox value="hard">Hard</Checkbox>
           </HStack>
         </CheckboxGroup>
       </Box>
@@ -39,23 +70,32 @@ const Filters = (props) => {
         <Text mb={2} fontWeight="bold">
           {'Marked as Solved'}
         </Text>
-        <CheckboxGroup spacing={10}>
+        <CheckboxGroup
+          spacing={10}
+          value={isSolved}
+          onChange={onFilterIsSolved}
+        >
           <HStack>
-            <Checkbox value="SOLVED">Solved</Checkbox>
-            <Checkbox value="UNSOLVED">Unsolved</Checkbox>
+            <Checkbox value="solved">Solved</Checkbox>
+            <Checkbox value="unsolved">Unsolved</Checkbox>
           </HStack>
         </CheckboxGroup>
       </Box>
 
       <Box>
-        <Text mb={2} fontWeight="bold">
-          {'Search by tags'}
-        </Text>
-        <Select defaultValue="Des Moines, IA">
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>>
-        </Select>
+        <CUIAutoComplete
+          label="Select Tags"
+          placeholder="Start typing..."
+          items={pickerItems}
+          tagStyleProps={{
+            rounded: 'full',
+            fontSize: 'xs'
+          }}
+          selectedTags={selectedTags}
+          onSelectedItemsChange={(changes) =>
+            onChangeFilterTags(changes.selectedItems)
+          }
+        />
       </Box>
     </Stack>
   );

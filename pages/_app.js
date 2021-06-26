@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import { ProvideAuth } from '../lib/auth';
+import { ProvideSearch } from '../lib/search';
 import {
   ChakraProvider,
   ColorModeScript,
@@ -15,14 +16,16 @@ import theme from '@/styles/theme';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={theme}>
-      <ProvideAuth>
+    <ProvideAuth>
+      <ThemeProvider theme={theme}>
         <ChakraProvider>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-          <Component {...pageProps} />
+          <ProvideSearch>
+            <Component {...pageProps} />
+          </ProvideSearch>
         </ChakraProvider>
-      </ProvideAuth>
-    </ThemeProvider>
+      </ThemeProvider>
+    </ProvideAuth>
   );
 }
 

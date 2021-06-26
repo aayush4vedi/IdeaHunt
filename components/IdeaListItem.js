@@ -7,6 +7,7 @@ import {
   TagLeftIcon,
   TagLabel,
   Heading,
+  HStack,
   Avatar
 } from '@chakra-ui/react';
 import {
@@ -17,7 +18,7 @@ import {
 } from 'react-icons/fa';
 import { parseISO, format } from 'date-fns';
 
-const IdeaListItem = ({ idea }) => {
+const IdeaListItem = ({ idea, noOfLines }) => {
   return (
     <Box py={4}>
       <Box
@@ -36,7 +37,7 @@ const IdeaListItem = ({ idea }) => {
                 size="lg"
                 variant="ghost"
               />
-              <Text>42</Text>
+              <Text>{idea?.upvotes}</Text>
               <IconButton
                 aria-label="icon"
                 icon={<FaChevronCircleDown />}
@@ -48,26 +49,60 @@ const IdeaListItem = ({ idea }) => {
           <Box ml={5} cursor="pointer" w="100%">
             <Stack spacing={2}>
               <Box>
-                <Tag
-                  rounded="md"
-                  variant="subtle"
-                  colorScheme="red"
-                  mb={2}
-                  size="md"
-                  // maxW="15"
-                >
-                  Tag name
-                </Tag>
+                {idea.tags.map((tag) => (
+                  <Tag
+                    rounded="md"
+                    variant="subtle"
+                    colorScheme="red"
+                    mb={2}
+                    mr={2}
+                    p={(1, 0.5)}
+                    size="xs"
+                    fontSize="xs"
+                  >
+                    {tag.label}
+                  </Tag>
+                ))}
               </Box>
-              <Heading as="h5">{idea.title}</Heading>
+              <Heading as="h5" size="lg">
+                {idea.title}
+              </Heading>
               <Box mb={5}>
-                <Text noOfLines={2}>{idea.description}</Text>
+                <Text noOfLines={noOfLines}>{idea.description}</Text>
               </Box>
               <Box>
-                <Tag rounded="md" colorScheme="blackAlpha" mr={5}>
-                  <TagLeftIcon boxSize="12px" as={FaLock} />
-                  <TagLabel>Unsolved</TagLabel>
-                </Tag>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="flex-start"
+                  mt={5}
+                >
+                  <Tag rounded="md" colorScheme="blackAlpha" mr={5}>
+                    {idea?.isSolved =='solved'? (
+                      <>
+                        <TagLeftIcon boxSize="12px" as={FaLockOpen} />
+                        <TagLabel>Solved</TagLabel>
+                      </>
+                    ) : (
+                      <>
+                        <TagLeftIcon boxSize="12px" as={FaLock} />
+                        <TagLabel>Unsolved</TagLabel>
+                      </>
+                    )}
+                  </Tag>
+                  <Tag
+                    variant="subtle"
+                    colorScheme={
+                      idea.level === 'easy'
+                        ? 'yellow'
+                        : idea.level === 'hard'
+                        ? 'red'
+                        : 'blue'
+                    }
+                  >
+                    {idea.level}
+                  </Tag>
+                </Box>
               </Box>
               <Stack spacing={2} mt={2}>
                 <Box
@@ -75,18 +110,25 @@ const IdeaListItem = ({ idea }) => {
                   alignItems="center"
                   justifyContent="space-between"
                 >
-                  <Box display="flex" mr={25}>
-                    <Avatar size="xs" name={''} src={''}></Avatar>
-                    <Text ml={2}>
+                  <Box display="flex" mr={25} alignItems="center">
+                    <Avatar
+                      size="xs"
+                      name={''}
+                      src={''}
+                      name={idea?.authorName}
+                      src={idea?.authorPhotoUrl}
+                    />
+                    <Text ml={2} fontSize="xs">
                       on {format(parseISO(idea?.createdAt), 'PPpp')}
                     </Text>
                   </Box>
                   <Box display="flex" alignItems="end" ml={25}>
                     <Text fontWeight="bold" textAlign="left" ml={5}>
-                      2 Submissions
+                      {idea.noOfComments ? idea.noOfComments : '0'} Comments
                     </Text>
                     <Text fontWeight="bold" textAlign="left" ml={5}>
-                      15 Comments
+                      {idea.noOfSubmissions ? idea.noOfSubmissions : '0'}{' '}
+                      Submissions
                     </Text>
                   </Box>
                 </Box>

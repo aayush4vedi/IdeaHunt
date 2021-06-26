@@ -1,0 +1,18 @@
+[
+  { "value": "all", "label": "all"},
+  { "value": "robotics", "label": "Robotics" },
+  { "value": "physics", "label": "Physics" },
+  { "value": "chemistry", "label": "Chemistry" },
+  { "value": "artificial-intelligence", "label": "AI" },
+  { "value": "machine-learning", "label": "Machine Learning" },
+  { "value": "data-science", "label": "Data Science" },
+  { "value": "business", "label": "Business" },
+  { "value": "entertainment", "label": "Entertainment" },
+  { "value": "e-commerce", "label": "E-Commerce" },
+  { "value": "food", "label": "Food" },
+  { "value": "gaming", "label": "Gaming" },
+  { "value": "software", "label": "Software" },
+  { "value": "app", "label": "App" },
+  { "value": "space", "label": "Space" },
+  { "value": "productivity", "label": "Productivity" }
+]
