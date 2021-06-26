@@ -12,8 +12,12 @@ import {
 import Footer from '@/components/Footer';
 import DashboardHeader from '@/components/DashboardHeader';
 import SideNav from '@/components/SideNav';
+import { useSearch } from '@/lib/search';
+import { useAuth } from '@/lib/auth';
 
-const DashboardShell = ({ children, navtype }) => {
+const DashboardShell = ({children, navtype, showSearchBar}) => {
+  const { search, onSearch } = useSearch();
+  const { auth } = useAuth();
   return (
     <Box
       backgroundColor="gray.100"
@@ -28,7 +32,12 @@ const DashboardShell = ({ children, navtype }) => {
         // mr={20}
         minHeight="80vh"
       >
-        <DashboardHeader />
+        <DashboardHeader
+          onSearch={onSearch}
+          search={search}
+          auth={auth}
+          showSearchBar={showSearchBar}
+        />
         <Box>
           <SideNav display={['none', null, 'block']}>{navtype}</SideNav>
           <Box pl={[0, null, '18rem']} mt="4rem">

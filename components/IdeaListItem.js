@@ -7,6 +7,7 @@ import {
   TagLeftIcon,
   TagLabel,
   Heading,
+  HStack,
   Avatar
 } from '@chakra-ui/react';
 import {
@@ -70,19 +71,38 @@ const IdeaListItem = ({ idea, noOfLines }) => {
                 <Text noOfLines={noOfLines}>{idea.description}</Text>
               </Box>
               <Box>
-                <Tag rounded="md" colorScheme="blackAlpha" mr={5} mt={5}>
-                  {idea?.solved ? (
-                    <>
-                      <TagLeftIcon boxSize="12px" as={FaLockOpen} />
-                      <TagLabel>Solved</TagLabel>
-                    </>
-                  ) : (
-                    <>
-                      <TagLeftIcon boxSize="12px" as={FaLock} />
-                      <TagLabel>Unsolved</TagLabel>
-                    </>
-                  )}
-                </Tag>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="flex-start"
+                  mt={5}
+                >
+                  <Tag rounded="md" colorScheme="blackAlpha" mr={5}>
+                    {idea?.isSolved =='solved'? (
+                      <>
+                        <TagLeftIcon boxSize="12px" as={FaLockOpen} />
+                        <TagLabel>Solved</TagLabel>
+                      </>
+                    ) : (
+                      <>
+                        <TagLeftIcon boxSize="12px" as={FaLock} />
+                        <TagLabel>Unsolved</TagLabel>
+                      </>
+                    )}
+                  </Tag>
+                  <Tag
+                    variant="subtle"
+                    colorScheme={
+                      idea.level === 'easy'
+                        ? 'yellow'
+                        : idea.level === 'hard'
+                        ? 'red'
+                        : 'blue'
+                    }
+                  >
+                    {idea.level}
+                  </Tag>
+                </Box>
               </Box>
               <Stack spacing={2} mt={2}>
                 <Box
@@ -107,7 +127,8 @@ const IdeaListItem = ({ idea, noOfLines }) => {
                       {idea.noOfComments ? idea.noOfComments : '0'} Comments
                     </Text>
                     <Text fontWeight="bold" textAlign="left" ml={5}>
-                      {idea.noOfSubmissions ? idea.noOfSubmissions : '0'} Submissions
+                      {idea.noOfSubmissions ? idea.noOfSubmissions : '0'}{' '}
+                      Submissions
                     </Text>
                   </Box>
                 </Box>

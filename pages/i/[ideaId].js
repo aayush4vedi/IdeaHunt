@@ -95,7 +95,7 @@ const Idea = ({ thisIdeaContent, initialComments }) => {
   );
 
   return (
-    <DashboardShell navtype={goBackButton}>
+    <DashboardShell navtype={goBackButton} showSearchBar={false}>
       <Box
         display="flex"
         flexDirection="column"

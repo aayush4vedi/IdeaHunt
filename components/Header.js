@@ -37,7 +37,6 @@ const Header = () => {
           />
           <Link
             href="/"
-            // isExternal
             fontWeight="bold"
             textAlign="left"
             fontSize="lg"

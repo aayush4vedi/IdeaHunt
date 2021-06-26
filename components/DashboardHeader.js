@@ -14,12 +14,19 @@ import {
   HStack
 } from '@chakra-ui/react';
 import Head from 'next/head';
-import { FaEllo, FaSun, FaMoon, FaGithub, FaGoogle, FaSearch } from 'react-icons/fa';
+import { useRef } from 'react';
+import {
+  FaEllo,
+  FaSun,
+  FaMoon,
+  FaGithub,
+  FaGoogle,
+  FaSearch
+} from 'react-icons/fa';
 
-import { useAuth } from '@/lib/auth';
-
-const DashboardHeader = () => {
-  const auth = useAuth();
+const DashboardHeader = (props) => {
+  const { onSearch, search, auth, showSearchBar, ...rest } = props;
+  const inputRef = useRef();
   return (
     <Box
       backgroundColor="white"
@@ -28,6 +35,7 @@ const DashboardHeader = () => {
       zIndex="sticky"
       borderBottom="1px"
       borderColor="gray.200"
+      {...rest}
     >
       <Box mt={2} mb={2} mr={20} ml={20}>
         <Head>
@@ -60,29 +68,36 @@ const DashboardHeader = () => {
               IdeaHunt
             </Link>
           </Box>
-          <Stack spacing={4} width="60%" boxShadow="md" p="1" rounded="md">
-            <InputGroup size="md" borderColor="white">
-              <InputLeftElement
-                pointerEvents="none"
-                children={
-                  <IconButton
-                    icon={<FaSearch />}
-                    color="gray.400"
-                    size="sm"
-                    variant="ghost"
-                  />
-                }
-              />
-              <Input
-                pr="4.5rem"
-                type="text"
-                focusBorderColor="blue.200"
-                //   autoFocus="true"
-                //   placeholder={'Search for ideas (Press "/" to focus)'}
-                placeholder={'Search for ideas '}
-              />
-            </InputGroup>
-          </Stack>
+          {showSearchBar === true ? (
+            <Stack spacing={4} width="60%" boxShadow="md" p="1" rounded="md">
+              <InputGroup size="md" borderColor="white">
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={
+                    <IconButton
+                      icon={<FaSearch />}
+                      color="gray.400"
+                      size="sm"
+                      variant="ghost"
+                    />
+                  }
+                />
+                <Input
+                  pr="4.5rem"
+                  type="text"
+                  fontWeight="bold"
+                  focusBorderColor="blue.200"
+                  type="text"
+                  onChange={onSearch}
+                  value={search}
+                  ref={inputRef}
+                  placeholder={'Search for ideas '}
+                />
+              </InputGroup>
+            </Stack>
+          ) : (
+            <></>
+          )}
           {/* <Box display="flex" alignItems="center">
             <IconButton
               aria-label="icon"

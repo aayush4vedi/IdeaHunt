@@ -29,31 +29,17 @@ import { mutate } from 'swr';
 
 import { createIdea } from '@/lib/db';
 import { useAuth } from '@/lib/auth';
-
-//TODO: fetch these tags from db
-const tags = [
-  { value: 'robotics', label: 'Robotics' },
-  { value: 'physics', label: 'Physics' },
-  { value: 'chemistry', label: 'Chemistry' },
-  { value: 'artificial-intelligence', label: 'AI' },
-  { value: 'machine-learning', label: 'Machine Learning' },
-  { value: 'data-science', label: 'Data Science' },
-  { value: 'business', label: 'Business' },
-  { value: 'entertainment', label: 'Entertainment' },
-  { value: 'e-commerce', label: 'E-Commerce' },
-  { value: 'food', label: 'Food' },
-  { value: 'gaming', label: 'Gaming' },
-  { value: 'software', label: 'Software' },
-  { value: 'app', label: 'App' },
-  { value: 'space', label: 'Space' },
-  { value: 'productivity', label: 'Productivity' }
-];
+import tags from '@/assets/tags';
 
 const SubmitIdeaModal = () => {
   const auth = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [pickerItems, setPickerItems] = useState(tags);
+  const [pickerItems, setPickerItems] = useState(
+    tags
+      .filter((tag) => tag.value !== 'all')
+      .sort((a, b) => a.label.localeCompare(b.label))
+  );
   const [selectedItems, setSelectedItems] = useState([]);
 
   const handleCreateItem = (item) => {
@@ -109,7 +95,7 @@ const SubmitIdeaModal = () => {
       level,
       tags: selectedItems,
       upvotes: 0,
-      solved: false,
+      isSolved: 'unsolved',
       noOfComments: 0,
       noOfSubmissions: 0
     };

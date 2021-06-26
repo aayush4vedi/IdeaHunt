@@ -1,7 +1,6 @@
 import { Box, Text, HStack, useRadioGroup } from '@chakra-ui/react';
 import { useRadio } from '@chakra-ui/radio';
 import useSWR from 'swr';
-import { compareDesc, parseISO } from 'date-fns';
 
 import { useAuth } from '@/lib/auth';
 import IdeaList from '@/components/IdeaList';
@@ -9,6 +8,7 @@ import fetcher from '@/utils/fetcher';
 import DashboardShell from '@/components/DashboardShell';
 import Filters from '@/components/Filters';
 import { useRef, useState } from 'react';
+import { useSearch } from '@/lib/search';
 
 function RadioCard(props) {
   const { getInputProps, getCheckboxProps } = useRadio(props);
@@ -44,18 +44,19 @@ const Dashboard = () => {
   const { data } = useSWR(user ? ['/api/ideas', user.za] : null, fetcher);
 
   //sort-by
+  const { sortBy, onSortByChange } = useSearch();
   const options = ['Latest', 'Hottest'];
-  const [sortKey, setSortKey] = useState('Latest');
+  // const [sortKey, setSortKey] = useState('Latest');
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'sorter',
-    defaultValue: 'Latest',
-    onChange: setSortKey
+    defaultValue: sortBy,
+    onChange: onSortByChange
   });
   const group = getRootProps();
 
   return (
-    <DashboardShell navtype={<Filters />}>
+    <DashboardShell navtype={<Filters />} showSearchBar={true} >
       <Box
         display="flex"
         alignSelf="flex-end"
@@ -83,11 +84,7 @@ const Dashboard = () => {
         </HStack>
       </Box>
 
-      {data ? (
-        <IdeaList ideas={data.ideas} sortby={sortKey} />
-      ) : (
-        <IdeaList ideas={[]} />
-      )}
+      {data ? <IdeaList ideas={data.ideas} /> : <IdeaList ideas={[]} />}
     </DashboardShell>
   );
 };
